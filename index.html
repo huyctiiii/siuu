@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Sinh Nhật</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: pink;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      width: 90%;
+      max-width: 600px;
+      opacity: 1;
+      transition: opacity 0.5s ease; /* Hiệu ứng chuyển mờ dần */
+    }
+    .hidden {
+      opacity: 0; /* Đặt opacity về 0 để tạo hiệu ứng mờ dần khi ẩn */
+    }
+    h1 {
+      font-size: 2em;
+      color: #ff1493;
+      margin-bottom: 20px;
+    }
+    .next-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      color: white;
+      background-color: #ff69b4;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .next-button:hover {
+      transform: scale(1.1);
+    }
+    .images {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .images img {
+      width: 500px; /* Tăng kích thước hình ảnh */
+      height: 500px; /* Tăng kích thước hình ảnh */
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    #fireworks {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 2s forwards; /* Hiệu ứng mờ dần vào */
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Phát nhạc bên ngoài các trang con để giữ nhạc phát liên tục -->
+<audio autoplay loop>
+  <source src="hppd.mp3" type="audio/mpeg">
+  Trình duyệt của bạn không hỗ trợ phát nhạc.
+</audio>
+
+<div class="container" id="content">
+  <h1>Chúc Mừng Sinh Nhật Bé Nơ!</h1>
+  <div class="images">
+    <img src="cutkk.jpg" alt="Ảnh sinh nhật">
+  </div>
+  <div class="next-button" onclick="nextPage()">Next</div>
+</div>
+
+<div id="fireworks">
+  <h1 style="color:white; text-align:center; padding-top: 40vh;">Chúc Mừng Sinh Nhật Minơ!</h1>
+</div>
+
+<script>
+  const pages = [
+  { title: "Chúc Mừng Sinh Nhật Bé Nơ!", images: ["cutkk.jpg"] },
+    { title: "Sinh Nhật 3 Tuổi", images: ["sn33.jpg", "sn3.jpg"] },
+    { title: "Sinh Nhật 4 Tuổi", images: ["sn4.jpg"] },
+    { title: "Sinh Nhật 5 Tuổi", images: ["sn5.jpg"] },
+    { title: "Sinh Nhật 6 Tuổi", images: ["sn6.jpg"] },
+    { title: "Sinh Nhật 8 Tuổi", images: ["sn8.jpg", "sn88.jpg", "sn888.jpg"] },
+    { title: "Chúc Mừng Sinh Nhật Minơ!", images: [] }
+
+  ];
+  let currentPage = 0;
+
+  function nextPage() {
+    const content = document.getElementById("content");
+    content.classList.add("hidden"); // Ẩn trang hiện tại với hiệu ứng mờ dần
+    
+    setTimeout(() => {
+      currentPage++;
+      if (currentPage < pages.length) {
+        const page = pages[currentPage];
+        content.innerHTML = `
+          <h1>${page.title}</h1>
+          <div class="images">
+            ${page.images.map(img => `<img src="${img}" alt="Ảnh sinh nhật">`).join("")}
+          </div>
+          ${currentPage < pages.length - 1 ? '<div class="next-button" onclick="nextPage()">Next</div>' : ""}
+        `;
+        content.classList.remove("hidden"); // Hiển thị trang tiếp theo với hiệu ứng mờ dần
+      }
+      if (currentPage === pages.length - 1) {
+        displayFireworks();
+      }
+    }, 500); // Thời gian chờ để hiển thị trang mới (khớp với thời gian hiệu ứng mờ dần)
+  }
+
+  function displayFireworks() {
+    const fireworks = document.getElementById("fireworks");
+    fireworks.style.display = "block";
+    fireworks.style.animation = "fadeIn 2s forwards";
+  }
+</script>
+
+</body>
+</html>
